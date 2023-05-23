@@ -1,5 +1,6 @@
 const express = require('express')
 const router = require('./routers/groceries')
+const session = require('express-session');
 const marketRouter = require('./routers/markets')
 const cookieParser = require('cookie-parser')
     // requireing the express from the express library from function that will return the express app
@@ -7,6 +8,11 @@ const app = express()
 
 
 app.use(cookieParser())
+app.use(session({
+    secret: 'ABDKSDHSJHJETHWEJHRJSHFJHSDJFH',
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
