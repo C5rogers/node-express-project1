@@ -24,6 +24,18 @@ const markets = [{
     miles: 1.3
 }, ];
 
+
+
+// this will make auth necessary for al lroutes in the express application 
+router.use((req, res, next) => {
+    if (req.session.user) {
+        next()
+    } else {
+        res.sendStatus(401)
+    }
+})
+
+
 router.get('', (request, response, next) => {
     const { miles } = request.query
     const parsed = parseFloat(miles)

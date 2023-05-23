@@ -2,6 +2,7 @@ const express = require('express')
 const router = require('./routers/groceries')
 const session = require('express-session');
 const marketRouter = require('./routers/markets')
+const authRouter = require('./routers/auth')
 const cookieParser = require('cookie-parser')
     // requireing the express from the express library from function that will return the express app
 const app = express()
@@ -21,8 +22,10 @@ app.use((req, res, next) => {
 })
 
 
+
 app.use('/api/v1/groceries', router);
 app.use('/api/v1/markets', marketRouter);
+app.use('/api/v1/auth', authRouter);
 
 // the above will create the express app
 const PORT = 3001;

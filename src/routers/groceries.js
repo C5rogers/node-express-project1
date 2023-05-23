@@ -13,8 +13,19 @@ const grocerieList = [{
     quantity: 4,
 }]
 
+
+// this will make auth necessary for al lroutes in the express application 
+router.use((req, res, next) => {
+    if (req.session.user) {
+        next()
+    } else {
+        res.sendStatus(401)
+    }
+})
+
+
+
 router.get('', (request, responce) => {
-    responce.cookie('visited', true, { maxAge: 100000 })
     responce.send(
         grocerieList
     );
