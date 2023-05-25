@@ -1,3 +1,6 @@
+// these are the modules that i need to inter in this app file to make it work more correctly
+
+// this one will requre the express library from the node modure that yoused to create the instance of express application
 const express = require('express')
 const router = require('./routers/groceries')
 const session = require('express-session');
@@ -8,6 +11,7 @@ const cookieParser = require('cookie-parser')
 const app = express()
 
 
+// this will register the cookieParser tool to parse the cookie to be readen from this server
 app.use(cookieParser())
 app.use(session({
     secret: 'ABDKSDHSJHJETHWEJHRJSHFJHSDJFH',
@@ -22,7 +26,7 @@ app.use((req, res, next) => {
 })
 
 
-
+// this will call the approprate routes to be called when the end point is reached
 app.use('/api/v1/groceries', router);
 app.use('/api/v1/markets', marketRouter);
 app.use('/api/v1/auth', authRouter);
