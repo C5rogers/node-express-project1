@@ -1,3 +1,4 @@
+// this will also do like the above file to create sub express router and responce and request from the express
 const { Router, response, request } = require('express')
 
 const router = Router()
@@ -13,7 +14,7 @@ const grocerieList = [{
     quantity: 4,
 }]
 
-
+// this will check for the user is authenticated or not
 // this will make auth necessary for al lroutes in the express application 
 router.use((req, res, next) => {
     if (req.session.user) {
@@ -25,6 +26,7 @@ router.use((req, res, next) => {
 
 
 
+// this will return the list if the user is authenticated or not
 router.get('', (request, responce) => {
     responce.send(
         grocerieList
