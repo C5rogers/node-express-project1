@@ -1,7 +1,10 @@
+// this will require the react library from the node_modules to be create some sub router to the user to be seen
 const { Router, response } = require('express')
 
 const router = Router()
 
+
+// this will define teh market list of the data to be send to the user if it is not satisfied
 const markets = [{
     id: 1,
     store: "kara chaf",
@@ -25,6 +28,8 @@ const markets = [{
 }, ];
 
 
+
+// this will check whether the user is authenticated or not from it's cookie and sessions
 
 // this will make auth necessary for al lroutes in the express application 
 router.use((req, res, next) => {
