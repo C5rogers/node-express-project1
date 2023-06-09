@@ -1,5 +1,6 @@
 // this is also requiring the router and response from the express app to use it latter
 const { Router, response } = require('express')
+const User = require('../database/schemas/User')
 
 const router = Router()
 
@@ -19,6 +20,23 @@ router.post('/login', (request, response) => {
         }
     } else {
         response.sendStatus(401)
+    }
+})
+
+//this is registering end point for the user
+router.post('/register', async(req, res) => {
+    const { email, password, username } = req.body;
+    const userDb = await User.findOne({
+        $or: [
+            { username },
+            { email }
+        ]
+    })
+    if (userDb) {
+        res.status(400).json({ msg: "the user is already exist" })
+    } else {
+        const newUesr = await User.create({ usrename, password, email })
+        response.status(201).json({ newUesr })
     }
 })
 
