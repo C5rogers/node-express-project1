@@ -29,6 +29,7 @@ router.post('/login', async(req, res) => {
     const isValid = compareHashedPassword(password, userDb.password)
 
     if (isValid) {
+        req.session.user = userDb
         return res.status(200).json({ msg: "welcome ser" })
     } else {
         return res.status(401).json({ error: "Invalid Credentials" })
