@@ -4,6 +4,8 @@
 const express = require('express')
 const router = require('./routers/groceries')
 const session = require('express-session');
+//importing the passport library
+const passport = require('passport')
 
 //just accepting the connection from the database folder
 require('./database/index')
@@ -29,6 +31,12 @@ app.use((req, res, next) => {
     console.log(`${req.method}:${req.url}`)
     next()
 })
+
+
+//this is where we need to setup our passport with the session we need
+app.use(passport.initialize());
+//this is for the session
+app.use(passport.session())
 
 
 // this will call the approprate routes to be called when the end point is reached
