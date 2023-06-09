@@ -2,27 +2,36 @@
 const { Router, response } = require('express')
 const User = require('../database/schemas/User')
     //importing the hash-password function from utils
-const { hashPassword } = require('../utils/helpers')
+const { hashPassword, compareHashedPassword } = require('../utils/helpers')
 
 
 const router = Router()
 
 // this route will authenticate the user based some conditions 
 // and it is also fake authentication because of you dont set up mongodb that you can manipulate it letter and also make it more smartter
-router.post('/login', (request, response) => {
-    // this will deconstract the username and password from the request body 
-    const { username, password } = request.body
-    if (username && password) {
-        if (request.session.user) {
-            response.send(request.session.user)
-        } else {
-            request.session.user = {
-                username
-            }
-            response.send(request.session)
-        }
+router.post('/login', async(req, res) => {
+    // this will deconstract the email and password from the request body 
+    const { email, password } = req.body
+    if (!email && !password) {
+        return res.status(400).json({ error: { email: "The email fild is required", password: "The password fild is required" } })
+    } else if (!email) {
+        return res.status(400).json({ msg: "The email fild is required" })
+    } else if (!password) {
+        return res.status(400).json({ msg: "The Password Fild is required" })
+    }
+
+    //finding the user from the database
+    const userDb = await User.findOne({ email })
+    if (!userDb) {
+        return res.status(401).json({ error: "Unauthorized!" })
+    }
+
+    const isValid = compareHashedPassword(password, userDb.password)
+
+    if (isValid) {
+        return res.status(200).json({ msg: "welcome ser" })
     } else {
-        response.sendStatus(401)
+        return res.status(401).json({ error: "Invalid Credentials" })
     }
 })
 
