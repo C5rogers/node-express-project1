@@ -1,6 +1,9 @@
 // this is also requiring the router and response from the express app to use it latter
 const { Router, response } = require('express')
 const User = require('../database/schemas/User')
+    //importing the hash-password function from utils
+const { hashPassword } = require('../utils/helpers')
+
 
 const router = Router()
 
@@ -25,7 +28,7 @@ router.post('/login', (request, response) => {
 
 //this is registering end point for the user
 router.post('/register', async(req, res) => {
-    const { email, password, username } = req.body;
+    const { email, username } = req.body;
     const userDb = await User.findOne({
         $or: [
             { username },
@@ -35,6 +38,7 @@ router.post('/register', async(req, res) => {
     if (userDb) {
         res.status(400).json({ msg: "the user is already exist" })
     } else {
+        const password = hashPassword(req.body.password)
         const newUesr = await User.create({ username, password, email })
         res.status(201).json({ newUesr })
     }
