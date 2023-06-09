@@ -7,6 +7,9 @@ const session = require('express-session');
 //importing the passport library
 const passport = require('passport')
 
+//requiring the strategy for the authentication
+require('./strategies/local')
+
 //just accepting the connection from the database folder
 require('./database/index')
 
