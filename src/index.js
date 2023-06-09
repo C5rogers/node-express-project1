@@ -3,17 +3,14 @@
 // this one will requre the express library from the node modure that yoused to create the instance of express application
 const express = require('express')
 const router = require('./routers/groceries')
-const mongoose = require('mongoose')
 const session = require('express-session');
+const mongoose = require('./database/index')
 const marketRouter = require('./routers/markets')
 const authRouter = require('./routers/auth')
 const cookieParser = require('cookie-parser')
     // requireing the express from the express library from function that will return the express app
 const app = express()
 
-mongoose.connect('mongodb:username:password@localhost:27017/nameofdb')
-    .then(() => console.log("connected to db"))
-    .catch((error) => console.log(error))
 
 
 // this will register the cookieParser tool to parse the cookie to be readen from this server
