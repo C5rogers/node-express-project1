@@ -4,7 +4,10 @@
 const express = require('express')
 const router = require('./routers/groceries')
 const session = require('express-session');
-const mongoose = require('./database/index')
+
+//just accepting the connection from the database folder
+require('./database/index')
+
 const marketRouter = require('./routers/markets')
 const authRouter = require('./routers/auth')
 const cookieParser = require('cookie-parser')
